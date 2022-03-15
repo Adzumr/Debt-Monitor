@@ -1,3 +1,4 @@
+import 'package:debt_monitor/screens/taskScreen.dart';
 import 'package:flutter/material.dart';
 
 class ToDoScreen extends StatefulWidget {
@@ -22,7 +23,10 @@ class _ToDoScreenState extends State<ToDoScreen> {
         backgroundColor: Colors.lightBlueAccent,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            showModalBottomSheet(context: context, builder: bottomSheetWidget);
+            showModalBottomSheet(
+              context: context,
+              builder: (context) => const TaskScreen(),
+            );
           },
           child: const Icon(Icons.add),
         ),
