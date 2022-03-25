@@ -9,9 +9,13 @@ class ToDoScreen extends StatefulWidget {
   State<ToDoScreen> createState() => _ToDoScreenState();
 }
 
-bool checkBoxValue = false;
-int? task;
-List<Widget> taskList = [];
+List<Widget> taskList = [
+  TaskTile(),
+  TaskTile(),
+  TaskTile(),
+  TaskTile(),
+  TaskTile(),
+];
 
 Widget bottomSheetWidget(BuildContext context) {
   return const CircularProgressIndicator();
@@ -45,7 +49,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                           style: headFontStyle,
                         ),
                         Text(
-                          "$task Tasks",
+                          "${taskList.length} Task(s)",
                           style: bodyFontStyle,
                         ),
                         const SizedBox(height: 10),
@@ -63,28 +67,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                       child: ListView.builder(
                         itemCount: taskList.length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(
-                              "Work out",
-                              style: titleFontStyle,
-                            ),
-                            subtitle: Text(
-                              "10 Mins Workout",
-                              style: bodyFontStyle.copyWith(fontSize: 12.sp),
-                            ),
-                            trailing: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    stateValue = !stateValue;
-                                  });
-                                },
-                                icon: Icon(
-                                  stateValue
-                                      ? Icons.check_box_outlined
-                                      : Icons.check_box_outline_blank,
-                                  size: 25.sp,
-                                )),
-                          );
+                          return taskList[index];
                         },
                       ),
                     )),
@@ -94,6 +77,47 @@ class _ToDoScreenState extends State<ToDoScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class TaskTile extends StatefulWidget {
+  const TaskTile({Key? key}) : super(key: key);
+
+  @override
+  State<TaskTile> createState() => _TaskTileState();
+}
+
+bool stateValue = false;
+
+class _TaskTileState extends State<TaskTile> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        "Work out",
+        style: stateValue
+            ? titleFontStyle.copyWith(decoration: TextDecoration.lineThrough)
+            : titleFontStyle,
+      ),
+      subtitle: Text(
+        "10 Mins Workout",
+        style: stateValue
+            ? bodyFontStyle.copyWith(
+                fontSize: 12.sp, decoration: TextDecoration.lineThrough)
+            : bodyFontStyle.copyWith(fontSize: 12.sp),
+      ),
+      trailing: IconButton(
+        onPressed: () {
+          setState(() {
+            stateValue = !stateValue;
+          });
+        },
+        icon: Icon(
+          stateValue ? Icons.check_box_outlined : Icons.check_box_outline_blank,
+          size: 25.sp,
+        ),
       ),
     );
   }
