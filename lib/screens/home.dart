@@ -1,5 +1,6 @@
-import 'package:debt_monitor/screens/taskScreen.dart';
+import 'package:debt_monitor/preDefined.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class ToDoScreen extends StatefulWidget {
   const ToDoScreen({Key? key}) : super(key: key);
@@ -10,7 +11,14 @@ class ToDoScreen extends StatefulWidget {
 
 bool checkBoxValue = false;
 int? task;
-List<Widget> taskList = [];
+List<Widget> taskList = [
+  TaskWidget(
+    task: "Workout",
+    taskValue: true,
+    onPressed: () {},
+  ),
+];
+
 Widget bottomSheetWidget(BuildContext context) {
   return const CircularProgressIndicator();
 }
@@ -19,111 +27,105 @@ class _ToDoScreenState extends State<ToDoScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.lightBlueAccent,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => const TaskScreen(),
-            );
-          },
-          child: const Icon(Icons.add),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.list),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  const Text(
-                    "To Do",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Sizer(
+        builder: (context, orientation, deviceType) {
+          return Scaffold(
+            backgroundColor: Colors.lightBlueAccent,
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                // addTaskMethod(context);
+              },
+              child: const Icon(Icons.add),
+            ),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "$task Tasks",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.list,
+                            size: 20.sp,
+                          ),
                         ),
                       ),
+                      const SizedBox(height: 15),
                       Text(
-                        "$task Completed",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        "To Do",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(color: whiteColorColor, fontSize: 30.sp),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "$task Tasks",
+                          ),
+                          Text(
+                            "$task Completed",
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            ),
-            Expanded(
-                child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
                 ),
-              ),
-              child: ListView.builder(
-                itemCount: taskList.length,
-                itemBuilder: (context, index) {
-                  return taskList[index];
-                },
-              ),
-            )),
-          ],
-        ),
+                Expanded(
+                    child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  child: ListView.builder(
+                    itemCount: taskList.length,
+                    itemBuilder: (context, index) {
+                      return taskList[index];
+                    },
+                  ),
+                )),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 class TaskWidget extends StatelessWidget {
-  String task;
-  String taskDescription;
-  bool taskValue;
-  Function onPressed;
+  String? task;
+  String? taskDescription;
+  bool? taskValue;
+  Function? onPressed;
   TaskWidget({
-    required this.task,
-    required this.onPressed,
-    required this.taskDescription,
-    required this.taskValue,
+    this.task,
+    this.onPressed,
+    this.taskDescription,
+    this.taskValue,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(task),
-      subtitle: Text(taskDescription),
+      title: Text(task ?? ""),
+      subtitle: Text(taskDescription ?? ""),
       trailing: Checkbox(
-          value: taskValue,
+          value: taskValue ?? false,
           onChanged: (value) {
-            taskValue = value!;
+            onPressed!();
           }),
     );
   }
