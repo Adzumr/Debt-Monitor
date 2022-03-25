@@ -8,7 +8,7 @@ TextStyle bodyFontStyle = TextStyle(
   color: blackColor,
 );
 TextStyle titleFontStyle = TextStyle(
-  fontSize: 18.sp,
+  fontSize: 20.sp,
   color: blackColor,
   fontWeight: FontWeight.bold,
 );

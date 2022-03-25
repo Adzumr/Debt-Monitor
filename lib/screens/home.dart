@@ -11,122 +11,90 @@ class ToDoScreen extends StatefulWidget {
 
 bool checkBoxValue = false;
 int? task;
-List<Widget> taskList = [
-  TaskWidget(
-    task: "Workout",
-    taskValue: true,
-    onPressed: () {},
-  ),
-];
+List<Widget> taskList = [];
 
 Widget bottomSheetWidget(BuildContext context) {
   return const CircularProgressIndicator();
 }
 
 class _ToDoScreenState extends State<ToDoScreen> {
+  bool stateValue = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Sizer(
         builder: (context, orientation, deviceType) {
           return Scaffold(
-            backgroundColor: Colors.lightBlueAccent,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 // addTaskMethod(context);
               },
               child: const Icon(Icons.add),
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.list,
-                            size: 20.sp,
-                          ),
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "To Do",
+                          style: headFontStyle,
+                        ),
+                        Text(
+                          "$task Tasks",
+                          style: bodyFontStyle,
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                    Expanded(
+                        child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
                         ),
                       ),
-                      const SizedBox(height: 15),
-                      Text(
-                        "To Do",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(color: whiteColorColor, fontSize: 30.sp),
+                      child: ListView.builder(
+                        itemCount: taskList.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              "Work out",
+                              style: titleFontStyle,
+                            ),
+                            subtitle: Text(
+                              "10 Mins Workout",
+                              style: bodyFontStyle.copyWith(fontSize: 12.sp),
+                            ),
+                            trailing: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    stateValue = !stateValue;
+                                  });
+                                },
+                                icon: Icon(
+                                  stateValue
+                                      ? Icons.check_box_outlined
+                                      : Icons.check_box_outline_blank,
+                                  size: 25.sp,
+                                )),
+                          );
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "$task Tasks",
-                          ),
-                          Text(
-                            "$task Completed",
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
+                    )),
+                  ],
                 ),
-                Expanded(
-                    child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
-                  ),
-                  child: ListView.builder(
-                    itemCount: taskList.length,
-                    itemBuilder: (context, index) {
-                      return taskList[index];
-                    },
-                  ),
-                )),
-              ],
+              ),
             ),
           );
         },
       ),
-    );
-  }
-}
-
-class TaskWidget extends StatelessWidget {
-  String? task;
-  String? taskDescription;
-  bool? taskValue;
-  Function? onPressed;
-  TaskWidget({
-    this.task,
-    this.onPressed,
-    this.taskDescription,
-    this.taskValue,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(task ?? ""),
-      subtitle: Text(taskDescription ?? ""),
-      trailing: Checkbox(
-          value: taskValue ?? false,
-          onChanged: (value) {
-            onPressed!();
-          }),
     );
   }
 }

@@ -1,8 +1,7 @@
-import 'package:debt_monitor/preDefined.dart';
+
 import 'package:debt_monitor/screens/home.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter/material.dart';  
 
 void main() => runApp(
       DevicePreview(
