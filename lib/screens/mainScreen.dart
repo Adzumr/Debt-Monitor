@@ -1,4 +1,3 @@
-import 'package:debt_monitor/model/taskModel.dart';
 import 'package:debt_monitor/preDefined.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -10,12 +9,6 @@ class ToDoScreen extends StatefulWidget {
   State<ToDoScreen> createState() => _ToDoScreenState();
 }
 
-List<Widget> taskList = [
-  TaskTile(),
-  TaskTile(),
-  TaskTile(),
-];
-
 class _ToDoScreenState extends State<ToDoScreen> {
   bool stateValue = false;
   @override
@@ -25,9 +18,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
         builder: (context, orientation, deviceType) {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                // addTaskMethod(context);
-              },
+              onPressed: () {},
               child: const Icon(Icons.add),
             ),
             body: SafeArea(
@@ -44,28 +35,35 @@ class _ToDoScreenState extends State<ToDoScreen> {
                           style: headFontStyle,
                         ),
                         Text(
-                          "${taskList.length} Task(s)",
+                          "Task(s)",
                           style: bodyFontStyle,
                         ),
                         const SizedBox(height: 10),
                       ],
                     ),
                     Expanded(
-                        child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
                       child: ListView.builder(
-                        itemCount: taskList.length,
+                        itemCount: 2,
                         itemBuilder: (context, index) {
-                          return taskList[index];
+                          return ListTile(
+                            title: Text(
+                              "Task",
+                              style: bodyFontStyle,
+                            ),
+                            subtitle: Text(
+                              "Task Description",
+                              style: bodyFontStyle.copyWith(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            trailing: Checkbox(
+                              value: false,
+                              onChanged: (value) {},
+                            ),
+                          );
                         },
                       ),
-                    )),
+                    ),
                   ],
                 ),
               ),

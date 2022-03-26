@@ -1,7 +1,9 @@
-
+import 'package:debt_monitor/model/task.dart';
+import 'package:debt_monitor/model/taskData.dart';
 import 'package:debt_monitor/screens/mainScreen.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/material.dart';  
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(
       DevicePreview(
