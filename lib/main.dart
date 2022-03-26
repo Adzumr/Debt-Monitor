@@ -1,4 +1,4 @@
-import 'package:debt_monitor/model/task.dart';
+import 'package:debt_monitor/controller/task.dart';
 import 'package:debt_monitor/model/taskData.dart';
 import 'package:debt_monitor/screens/mainScreen.dart';
 import 'package:device_preview/device_preview.dart';
