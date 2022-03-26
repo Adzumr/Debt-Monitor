@@ -1,5 +1,8 @@
+import 'package:debt_monitor/model/task.dart';
+import 'package:debt_monitor/model/taskData.dart';
 import 'package:debt_monitor/preDefined.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class ToDoScreen extends StatefulWidget {
@@ -10,15 +13,57 @@ class ToDoScreen extends StatefulWidget {
 }
 
 class _ToDoScreenState extends State<ToDoScreen> {
-  bool stateValue = false;
   @override
   Widget build(BuildContext context) {
+    String? task;
+    String? description;
+    bool? isdone;
+    dynamic taskLength = Provider.of<TaskData>(context).tasks.length;
     return SafeArea(
       child: Sizer(
         builder: (context, orientation, deviceType) {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<TaskData>(context, listen: false).clearList();
+
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Column(
+                        children: [
+                          TextField(
+                            onChanged: ((value) {
+                              task = value;
+                            }),
+                            decoration: const InputDecoration(hintText: "Task"),
+                          ),
+                          TextField(
+                            onChanged: ((value) {
+                              description = value;
+                            }),
+                            decoration:
+                                const InputDecoration(hintText: "Description"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                Provider.of<TaskData>(context, listen: false)
+                                    .tasks
+                                    .add(Task(
+                                        description: description!,
+                                        name: task!,
+                                        isDone: false));
+
+                                Navigator.pop(context);
+                              });
+                            },
+                            child: const Text("Add"),
+                          )
+                        ],
+                      );
+                    });
+              },
               child: const Icon(Icons.add),
             ),
             body: SafeArea(
@@ -35,7 +80,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                           style: headFontStyle,
                         ),
                         Text(
-                          "Task(s)",
+                          "$taskLength Task(s)",
                           style: bodyFontStyle,
                         ),
                         const SizedBox(height: 10),
@@ -43,23 +88,23 @@ class _ToDoScreenState extends State<ToDoScreen> {
                     ),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: 2,
+                        itemCount: taskLength,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(
-                              "Task",
-                              style: bodyFontStyle,
-                            ),
-                            subtitle: Text(
-                              "Task Description",
-                              style: bodyFontStyle.copyWith(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            trailing: Checkbox(
-                              value: false,
-                              onChanged: (value) {},
-                            ),
+                          return Column(
+                            children: [
+                              Text(Provider.of<TaskData>(context)
+                                  .tasks[index]
+                                  .name),
+                              Text(Provider.of<TaskData>(context)
+                                  .tasks[index]
+                                  .description),
+                              Checkbox(
+                                value: Provider.of<TaskData>(context)
+                                    .tasks[index]
+                                    .isDone,
+                                onChanged: null,
+                              )
+                            ],
                           );
                         },
                       ),

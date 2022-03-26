@@ -18,13 +18,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'To Do App',
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
+    return ChangeNotifierProvider(
+      create: (context) => TaskData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'To Do App',
+        theme: ThemeData(
+          primarySwatch: Colors.grey,
+        ),
+        home: const ToDoScreen(),
       ),
-      home: const ToDoScreen(),
     );
   }
 }

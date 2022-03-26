@@ -1,14 +1,14 @@
 class Task {
-  String? name;
-  String? description;
+  String name;
+  String description;
   bool isDone;
 
   Task({
-    this.isDone = false,
-    this.name,
-    this.description,
+    required this.isDone,
+    required this.name,
+    required this.description,
   });
-  void isDOneToggle() {
+  void isDoneToggle() {
     isDone = !isDone;
   }
 }
