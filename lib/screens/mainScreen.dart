@@ -25,7 +25,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                ShowModelMethod(context, task, description);
+                ShowModelMethod(description: description, task: task);
               },
               child: const Icon(Icons.add),
             ),
@@ -57,7 +57,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
                             return TaskTile(
                               task: taskData.tasks[index].name,
                               description: taskData.tasks[index].description,
-
                             );
                           },
                         ),
@@ -73,8 +72,11 @@ class _ToDoScreenState extends State<ToDoScreen> {
     );
   }
 
-  Future<dynamic> ShowModelMethod(
-      BuildContext context, String? task, String? description) {
+  Future<dynamic> ShowModelMethod({
+    context,
+    String? task,
+    String? description,
+  }) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {

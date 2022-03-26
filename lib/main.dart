@@ -1,4 +1,3 @@
-import 'package:debt_monitor/controller/task.dart';
 import 'package:debt_monitor/model/taskData.dart';
 import 'package:debt_monitor/screens/mainScreen.dart';
 import 'package:device_preview/device_preview.dart';
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
-        home: const ToDoScreen(),
+        home: ToDoScreen(),
       ),
     );
   }
