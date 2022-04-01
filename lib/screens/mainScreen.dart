@@ -25,7 +25,41 @@ class _ToDoScreenState extends State<ToDoScreen> {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                ShowModelMethod(description: description, task: task);
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Column(
+                        children: [
+                          TextField(
+                            onChanged: ((value) {
+                              task = value;
+                            }),
+                            decoration: const InputDecoration(hintText: "Task"),
+                          ),
+                          TextField(
+                            onChanged: ((value) {
+                              description = value;
+                            }),
+                            decoration:
+                                const InputDecoration(hintText: "Description"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                Provider.of<TaskData>(context, listen: false)
+                                    .tasks
+                                    .add(Task(
+                                        description: description!,
+                                        name: task!,));
+
+                                Navigator.pop(context);
+                              });
+                            },
+                            child: const Text("Add"),
+                          )
+                        ],
+                      );
+                    });
               },
               child: const Icon(Icons.add),
             ),
@@ -70,46 +104,5 @@ class _ToDoScreenState extends State<ToDoScreen> {
         },
       ),
     );
-  }
-
-  Future<dynamic> ShowModelMethod({
-    context,
-    String? task,
-    String? description,
-  }) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Column(
-            children: [
-              TextField(
-                onChanged: ((value) {
-                  task = value;
-                }),
-                decoration: const InputDecoration(hintText: "Task"),
-              ),
-              TextField(
-                onChanged: ((value) {
-                  description = value;
-                }),
-                decoration: const InputDecoration(hintText: "Description"),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    Provider.of<TaskData>(context, listen: false).tasks.add(
-                        Task(
-                            description: description!,
-                            name: task!,
-                            isDone: false));
-
-                    Navigator.pop(context);
-                  });
-                },
-                child: const Text("Add"),
-              )
-            ],
-          );
-        });
   }
 }

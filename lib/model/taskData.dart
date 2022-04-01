@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class TaskData extends ChangeNotifier {
   List<Task> tasks = [];
   Task addTask(bool isDone, String name, String description) {
-    return Task(isDone: isDone, name: name, description: description);
+    return Task(name: name, description: description);
   }
 
   int get taskCount {
